@@ -15,6 +15,8 @@ steps:
     - -c
     - |
       docker push gcr.io/$PROJECT_ID/binauthz-test:latest &&
+      docker tag gcr.io/$PROJECT_ID/binauthz-test:latest gcr.io/$PROJECT_ID/binauthz-test:latest-good &&
+      docker push gcr.io/$PROJECT_ID/binauthz-test:latest-good &&
       docker image inspect gcr.io/$PROJECT_ID/binauthz-test:latest --format '{{index .RepoDigests 0}}' > image-digest.txt &&
       cat image-digest.txt
     id: push
@@ -41,4 +43,4 @@ steps:
       -policy=policy.yaml
     waitFor: vulnpoll
     id: vulnsign
-images: ['gcr.io/$PROJECT_ID/binauthz-test:latest']
+images: ['gcr.io/$PROJECT_ID/binauthz-test:latest', 'gcr.io/$PROJECT_ID/binauthz-test:latest-good']
