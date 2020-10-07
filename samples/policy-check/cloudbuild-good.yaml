@@ -24,11 +24,17 @@ steps:
     - -c
     - |
       /kritis/signer \
+      -mode=check-and-sign \
       -v=10 \
       -alsologtostderr \
       -image=$(/bin/cat image-digest.txt) \
       -policy=policy.yaml \
-      -mode=check-only
+      -overwrite=true \
+      -note_name=projects/global-grammar-291814/notes/vuln-check-passed-note \
+      -attestation_project=global-grammar-291814 \
+      -kms_key_name=projects/global-grammar-291814/locations/global/keyRings/attestors/cryptoKeys/vuln-check-signing-key/cryptoKeyVersions/1 \
+      -kms_digest_alg=SHA256
     waitFor: push
     id: vulnsign
 images: ['gcr.io/$PROJECT_ID/binauthz-test:latest']
+
