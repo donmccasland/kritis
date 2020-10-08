@@ -14,7 +14,9 @@ steps:
     args:
     - -c
     - |
+      docker tag gcr.io/$PROJECT_ID/binauthz-test:latest gcr.io/$PROJECT_ID/binauthz-test:good &&
       docker push gcr.io/$PROJECT_ID/binauthz-test:latest &&
+      docker push gcr.io/$PROJECT_ID/binauthz-test:good &&
       docker image inspect gcr.io/$PROJECT_ID/binauthz-test:latest --format '{{index .RepoDigests 0}}' > image-digest.txt &&
       cat image-digest.txt
     id: push
